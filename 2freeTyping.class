@@ -1,0 +1,150 @@
+class FreeTyping
+{
+private:
+public:
+
+    #include"2.1OtherFunctions.cpp"
+
+    int TypingFree()
+    {
+        system("CLS");
+
+        FILE *pt1, *pt2, *pt3;
+        long double InstTypSpeed = 0;
+        long double AverageSpeedyDivByTwo = 0, AverageSpeedByTotalTime = 0;
+        long double TotalTime = 0;
+        clock_t StartTime, EndTime;
+        char ch, temp, Letter[10], TempEsc;
+        int M, TotalNoOfLettersTyped = 0;
+
+        pt1 = fopen("DataFile", "w");
+        fclose(pt1);
+
+        for (int i1 = 0;; i1++)
+        {
+            cout << "Seconds : " << TotalTime << endl;
+            cout << "No. of letters" << TotalNoOfLettersTyped << endl;
+            cout << "Inst. Typing Speed = " << setw(6) << (long int)InstTypSpeed;
+            cout << " Letters/hour " << endl;
+            cout << "Average Speed using divide by 2 = " << setw(6) << (int)AverageSpeedyDivByTwo;
+            cout << " letters/hour" << endl;
+            cout << "Average Speed  by Total Time = " << setw(6) << (int)AverageSpeedByTotalTime;
+            cout << " letters/hour";
+            cout << "      " /*6 spaces are left here*/ << "Press esc to stop typing" << endl;
+
+            pt2 = fopen("DataFile", "r");
+            ch = fgetc(pt2);
+            while (ch != EOF)
+            {
+
+                cout << ch;
+                ch = fgetc(pt2);
+            }
+            fclose(pt2);
+
+            StartTime = clock();
+            for (int i2 = 0; i2 < 10; i2++)
+            {
+
+                Letter[i2] = _getche();
+                if (i2 == 9)
+                {
+                    temp = Letter[i2];
+                }
+
+                if ((Letter[i2] == 8))
+                {
+                    if (i2 > 0)
+                    {
+                        i2--;
+                        cout << Letter[i2];
+                        continue;
+                    }
+                    if (i2 == 0)
+                    {
+                        i2--;
+                        cout << temp;
+                        continue;
+                    }
+                }
+
+                if (Letter[i2] == 13)
+                {
+                    pt3 = fopen("DataFile", "a");
+                    cout << endl;
+                    fprintf(pt3, "\n");
+
+                    M = 0;
+
+                    goto here;
+                }
+                else
+                {
+                    M = 1;
+                }
+
+                if (Letter[i2] == 27)
+                {
+                    EndTime = clock();
+                    TotalNoOfLettersTyped = ((i1)*10) + (i2);
+                    TotalTime = AddThisToTotalTime(TotalTime, MilliSecsToSecs(TimeDifference(StartTime, EndTime)));
+                    AverageSpeedByTotalTime = InstTypSpdForNLetters(TotalTime, TotalNoOfLettersTyped);
+                    InstTypSpeed = InstTypSpdForNLetters(MilliSecsToSecs(TimeDifference(StartTime, EndTime)), i2);
+                    AverageSpeedyDivByTwo = OverAllAverageSpeed(AverageSpeedyDivByTwo, InstTypSpdForNLetters(MilliSecsToSecs(TimeDifference(StartTime, EndTime)), i2));
+
+                    system("CLS");
+                    system("Color 07");
+                    cout << "Seconds : " << TotalTime << endl;
+                    cout << "No. of letters typed : " << TotalNoOfLettersTyped << endl;
+                    cout << "Inst. Typing Speed = " << setw(6) << (long int)InstTypSpeed;
+                    cout << " Letters/hour " << endl;
+                    cout << "Average Speed using divide by 2 = " << setw(6) << (int)AverageSpeedyDivByTwo;
+                    cout << " letters/hour" << endl;
+                    cout << "Average Speed  by Total Time = " << setw(6) << (int)AverageSpeedByTotalTime;
+                    cout << " letters/hour" << endl;
+                    cout << endl
+                         << endl
+                         << "Press esc";
+
+                Near_getch:
+                    TempEsc = _getch();
+                    if (TempEsc == 27)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        goto Near_getch;
+                    }
+                }
+
+                pt3 = fopen("DataFile", "a");
+                fprintf(pt3, "%c", Letter[i2]);
+            here:
+                fclose(pt3);
+            }
+
+            EndTime = clock();
+
+            system("CLS");
+
+            TotalNoOfLettersTyped = ((i1 + 1) * 10); ///////////
+            TotalTime = AddThisToTotalTime(TotalTime, MilliSecsToSecs(TimeDifference(StartTime, EndTime)));
+            AverageSpeedByTotalTime = InstTypSpdForNLetters(TotalTime, TotalNoOfLettersTyped);
+            InstTypSpeed = InstTypSpdFor10Letters(MilliSecsToSecs(TimeDifference(StartTime, EndTime)));
+            AverageSpeedyDivByTwo = OverAllAverageSpeed(AverageSpeedyDivByTwo, InstTypSpdFor10Letters(MilliSecsToSecs(TimeDifference(StartTime, EndTime))));
+         if(InstTypSpeed >= 10000 )
+         {
+             system("Color 0A");
+         }
+         if(InstTypSpeed < 10000 )
+         {
+             system("Color 07");
+         }
+         if(InstTypSpeed >= 20000 )
+         {
+             system("Color 0B");
+         }
+        }
+    }
+};

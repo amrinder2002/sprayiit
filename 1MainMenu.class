@@ -1,0 +1,97 @@
+class MainMenu
+{
+private:
+public:
+    int Tec;
+
+    void ArrowOrNo(int remainder, int Reference)
+    {
+        if (remainder == Reference)
+        {
+            cout << "-->";
+        }
+        else
+        {
+            cout << "   ";
+        }
+    }
+    int Menu()
+    {
+
+        int Value, Remainder;
+        char CharValue;
+
+        system("CLS");
+
+        for (int i1 = 0;; i1++)
+        {
+
+            cout << "Main Menu" << endl;
+            cout << "Press Enter To Submit" << endl;
+            cout << "either press up or down slowly" << endl;
+
+            //////////////////Initial Condition///////////////////
+            if (i1 == 0)
+            {
+                CharValue = 80;
+                Value = 2;
+            }
+            //////////////////////////////////////////////////////
+
+            ////////////////Start Of Switch Case Statements//////////////////
+            switch (CharValue)
+            {
+            case 13:
+            {
+
+                /*ascii value of enter is 13 , when executer will
+         press enter then below statement will be executed*/
+                system("CLS");
+                return Remainder;
+            }
+            case 72:
+            {
+                /*ascii value of up is 72*/
+                Value += 2;
+
+                break;
+            }
+            case 80:
+            {
+                /*ascii value of down is 80*/
+                Value++;
+
+                break;
+            }
+
+            default:
+            {
+
+                break;
+            }
+            }
+            ///////////////End Of Switch Case Statements///////////////////
+
+            ///////////////new value of remainder will be calculated here///////////
+            Remainder = (Value % 3);
+            //////////////////////////
+
+            //////Formating of ,screen or console, will be done by following satements////////
+            ArrowOrNo(Remainder, 0);
+            cout << "Free Typing" << endl;
+
+            ArrowOrNo(Remainder, 1);
+            cout << "String Typing" << endl;
+
+            ArrowOrNo(Remainder, 2);
+            cout << "Exit" << endl;
+            ///////////////////////////////////////
+
+            ///////////Input of variable CharValue Will take place here////////////////////
+            CharValue = _getch();
+            //////////////////////////////////////////////////////
+
+            system("CLS");
+        }
+    }
+};

@@ -1,0 +1,134 @@
+class RandomString
+{
+private:
+    
+public:
+
+#include"3.1OtherFunctions.cpp"
+
+int StringTyping()
+{
+    char CharNum;
+    int num;
+    cout<<"Please enter value less than 1000 and greater than 3"<<endl;
+    cout<<"How long do you want the string to be:";
+    cin>>num;
+    
+        char alpha[num];
+        clock_t StartTime, EndTime;
+        long double TotalTime;
+        int count = 0;
+        char final[num+1] , Response;
+
+    if ((num <= 1000)and(num >3))
+    {
+        system("CLS");
+        
+        cout << "Random String :-" << endl;
+        
+
+        srand(time(0));
+
+        for (int i1 = 0; i1 < num; i1++)
+        {
+        xyz:
+
+            CharNum = (65 + rand() % 58);
+            if ((CharNum < 97) && (CharNum > 90))
+            {
+                goto xyz;
+            }
+
+            cout << CharNum;
+            alpha[i1] = CharNum;
+        }
+        cout << endl;
+
+        StartTime = clock();
+
+        for (int i = 0; i < num + 1; i++)
+        {
+            final[i] = _getche();
+
+            if ((i>0) and (final[i] == 8))
+            {
+                backspace(&i, num, alpha, final);
+
+                
+            }
+
+
+            if (final[i] == 27)
+            {
+                system("CLS");
+                return 0;
+            }
+
+            if ((i == num) and (final[num] != 13))
+            {
+                SubmitResponse(&i, num , alpha, final);
+            }
+
+             if (  (i!=num)  and  ( final[i]<65 or final[i]>122 or ( final[i]>90 and final[i]<97) )  )
+            {
+                  SubmitResponse(&i, num , alpha, final);
+            }
+
+            
+        }
+
+        EndTime = clock();
+        cout << endl;
+        for (int i = 0; i < num; i++)
+        {
+            if (final[i] != alpha[i])
+            {
+
+                cout << final[i] << "  not matching with  " << alpha[i] << endl;
+            }
+            else
+            {
+                count++;
+            }
+        }
+        if (count == num)
+        {
+            cout <<endl<< setw(45) << "All characters are passed correctly." << endl;
+        }
+        TotalTime = (EndTime - StartTime);
+        cout << endl<<"Total Time taken is " << TotalTime / 1000 << "sec." << endl;
+        float score = 0;
+
+        score = ((count * 1000)/(18 *TotalTime / 1000 ));
+        cout<<endl<<"Your score is : "<<score<<endl<<endl;
+        cout<<"Press esc for main menu"<<endl;
+    
+        Above:
+        Response=_getch();
+        if (Response== 27)
+            {
+                return 0;
+            }
+        else
+        {
+            goto Above;
+        }
+    }
+    else
+    {
+         system("CLS");
+        cout<<"Press esc for main menu"<<endl;
+        Below:
+        Response=_getch();
+        if (Response== 27)
+            {
+                return 0;
+            }
+        else
+        {
+            goto Below;
+        }
+    }
+}
+
+};
